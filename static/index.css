@@ -5,40 +5,48 @@ body {
 
 .container-index {
     width: 100%;
+    background-image: url("water_homepage.jpg");
+    background-size: cover;
     height: 100vh;
-    background-color: black;
     color: white;
     display: flex;
     flex-direction: column;
 }
+
 a {
     text-decoration: none;
-    color:white;
+    color: white;
 }
+
 nav {
     display: flex;
     flex-direction: row-reverse;
     width: 100%;
-    min-height: 2em;
-    gap: .5em;
+    min-height: 3em;
+    gap: 2em;
 }
+
 .brick-index {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 2em;
-    padding: 0.2em;
-    transition: all ease-in 0.5s;
-    border-bottom: 1px solid black;
+    padding: 0.5em;
+    transition: all ease-in 0.1s;
+    color: rgb(106, 129, 200);
+    opacity: 0.8;
+
 }
+
 .brick-index:hover {
-    border-bottom: 1px solid white;
     cursor: pointer;
+    opacity: 1;
 }
+
 #index {
     width: 100%;
-    /* background-color: yellow; */
     height: 100%;
-    background-image: url("/static/counter.jpg");
-    background-size:cover;
+    background-size: cover;
 }
