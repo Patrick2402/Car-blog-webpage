@@ -1,8 +1,7 @@
 package main
-//import "fmt"
+
 import (
 	"net/http"
-	//"io"
 	"log"
 	"fmt"
 	"database/sql"
@@ -19,25 +18,23 @@ if errdb != nil {
 }
 defer db.Close()
 
-insert, errquery := db.Query( "CREATE TABLE IF NOT EXISTS user ( ID INT PRIMARY KEY AUTO_INCREMENT, username VARCHAR(50) NOT NULL UNIQUE, password VARCHAR(255) NOT NULL);")
-insert2, errquery2 := db.Query( "CREATE TABLE IF NOT EXISTS blogs ( ID INT PRIMARY KEY AUTO_INCREMENT, title VARCHAR(255) NOT NULL UNIQUE, mess VARCHAR(255) NOT NULL);")
 
+insert, errquery := db.Query( "CREATE TABLE IF NOT EXISTS user ( ID INT PRIMARY KEY AUTO_INCREMENT, username VARCHAR(50) NOT NULL UNIQUE, password VARCHAR(255) NOT NULL);")
+insertBlog, errqueryBlog := db.Query( "CREATE TABLE IF NOT EXISTS blogs ( ID INT PRIMARY KEY AUTO_INCREMENT, title VARCHAR(255) NOT NULL UNIQUE, mess VARCHAR(255) NOT NULL);")
+defer insert.Close()
+defer insertBlog.Close()
 if errquery != nil  {
 	log.Fatal(errquery.Error())
 }
-if errquery2 != nil {
-	log.Fatal(errquery2.Error())
+if errqueryBlog != nil {
+	log.Fatal(errqueryBlog.Error())
 }
 
-defer insert.Close()
-defer insert2.Close()
-
-fmt.Println("Success!")
+fmt.Println("Success! - Database is done")
 
 http.HandleFunc("/",func(w http.ResponseWriter, r *http.Request)  {
 	http.ServeFile(w,r,"index.html")
 })
-
 http.HandleFunc("/login",func(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w,r,"login.html")
 })
@@ -51,11 +48,11 @@ http.HandleFunc("/submit",submitHandle)
 http.HandleFunc("/mess",submitMess)
 
 log.Fatal(http.ListenAndServe("0.0.0.0:8080", nil))
+
 }
 
 func submitMess(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		// Jeśli nie jest to żądanie POST, wyślij kod 405 Method Not Allowed
 		http.Error(w, "Method is not supported.", http.StatusMethodNotAllowed)
 		return
 	}
@@ -71,7 +68,7 @@ func submitMess(w http.ResponseWriter, r *http.Request) {
 	if errin != nil {
 		http.Error(w, "Error inserting new blog.", http.StatusInternalServerError)
 		return
-	}else
+	} else
 	{
 		http.Redirect(w,r,"/blog",302)
 	}
@@ -81,7 +78,6 @@ func submitMess(w http.ResponseWriter, r *http.Request) {
 
 func submitHandle(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		// Jeśli nie jest to żądanie POST, wyślij kod 405 Method Not Allowed
 		http.Error(w, "Method is not supported.", http.StatusMethodNotAllowed)
 		return
 	}
@@ -100,7 +96,7 @@ func submitHandle(w http.ResponseWriter, r *http.Request) {
 	if errin != nil {
 		http.Error(w, "Error inserting new user.", http.StatusInternalServerError)
 		return
-	}else
+	} else
 	{
 		http.Redirect(w,r,"/",302)
 	}
