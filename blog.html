@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/blogs.css">
+
+    <title>Blog</title>
+</head>
+
+<body>
+    <div class="container-index">
+        <nav>
+            <a href="/" class="brick-index">HomePage</a>
+            <a href="/login" class="brick-index">Log In</a>
+            <a href="/blog" class="brick-index">Blog</a>
+        </nav>
+        <div id="index">
+            <form action="/mess" method="post">
+                <div>
+                    <label for="title">Title:</label><br>
+                    <input required type="text" id="title" name="title">
+                </div>
+                <div>
+                    <label for="content">Message:</label><br>
+                    <textarea required id="content" name="content" rows="4" cols="50"></textarea>
+                </div>
+                <div>
+                    <input type="submit" value="Wyślij">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
